@@ -7,11 +7,20 @@
 
 \usepackage[dvips]{graphicx}
 \usepackage[ruled,vlined]{algorithm2e}
-\usepackage{amsfonts,amssymb}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{mathtools}
+
+\providecommand{\abs}[1]{\lvert#1\rvert}
+\providecommand{\norm}[1]{\lVert#1\rVert}
+
 \usepackage{calc}
 \usepackage{subfigure}
 
 \usepackage{color}
+\usepackage{soul}
+\usepackage{comment}
 
 \newtheorem{prop}{Property}
 
@@ -31,11 +40,18 @@ Institute for Medical Informatics, Statistics \& Documentation\\
 \maketitle
 
 \begin{abstract}
-This is a \textit{general purpose template} for all types of Springer LNCS and LNAI submissions following the llncs.cls styleset. It includes hints for \LaTeX typesetting of theory, algorithms, tables, formulas etc. s based on the preparation of a research article for submission to the {\it Transactions on Rough Sets} (TRS), which is a journal subline of the {\it Lecture Notes in Computer Science} (LNCS) published by Springer\footnote{See \texttt{http://www.springer.com/west/home/computer/lncs?SGWID=}\\\texttt{4-164-6-99627-0}}. However, this template can be used for any LNCS or LNAI contribution using the llncs style. This document illustrates parts of a manuscript ({\em e.g.}, abstract, keywords, introduction, organization of sections, notation, algorithms, theory, formulas, figures, tables, conclusion, acknowledgements and references) of a typical Springer LNCS/LNAI article.   \LaTeX~and the Springer \emph{llncs} document class are to be used to prepare an article. Details on how to obtain and use \LaTeX~in principal are also outlined. BTW: A very interesting idea is to prepare a graphical abstract, which outlines the content of a paper within a single image. Moreover, a good idea is to boil down the three (3) most important issues on how this paper contributes to the international scientific community. Finally, consider that what other researches can use - will be referenced, thus will increase your impact. This template has zero (0) errors, zero warnings, and zero (0) bad boxes.
+	
+The amount of patient-related data produced in today’s clinical setting poses many challenges with respect to collection, storage and responsible use. For example, in research and public health care analysis, data must be anonymized before transfer, for which the k-anonymity measure was introduced and successively enhanced by further criteria. As k-anonymity is an NP-hard problem, modern approaches often make use of heuristics based methods. This paper will convey the motivation for anonymization followed by an outline of its criteria as well as a general overview of methods \& algorithmic approaches to tackle the problem. \\
+
+As the resulting data set will represent a trade-off between utility and individual privacy, we need to optimize those measures to individual (subjective) standards. Moreover, the efficacy of an algorithm strongly depends on the background knowledge of a potential attacker as well as the underlying problem domain. Therefore, it seems logical to adapt the process including expert domain knowledge, which can be done via an interactive machine learning (iML) approach. We will therefore point out how domain experts might get involved to improve upon current methods and introduce an example setup based on the SaNGreeA algorithm; due to this algorithm's nature of taking into account structural (network) as well as information properties of the underlying problem domain, it can be useful for (but also limited to) common tabular data anonymization. \\
+
+We will present our work by demonstrating a Web-based User Interface to conduct interactive machine learning tasks and compare the results of a variety of different parameter settings from our iML experiments with a standard industry anonymization algorithm in terms of efficiency, information loss as well as threat scenarios \hl{No idea how to do that yet...}. A discussion of future developments and possibilities will finally conclude this paper.
+
 
 \medskip
 
-\textbf{Keywords}:~Springer Article, guidelines, \LaTeX, LNCS, LNAI.
+\textbf{Keywords}: machine learning, interactive machine mearning, anonymization, k-anonymity, SaNGreeA, information loss, structural loss, cost weighing vector
+
 
 \end{abstract}
 
@@ -47,6 +63,204 @@ This is a \textit{general purpose template} for all types of Springer LNCS and L
 
 \section{Introduction and Motivation for Research}
 
+
+\section{Glossary and Key Terms}
+
+\textbf{Note: This is only for use when producing a Springer LNCS SOTA State-of-the-Art-Analysis paper}
+\\[0,2cm]
+\emph{SaNGreeA} is the abbreviation for Social Network Greedy Anonymization, which describes an anonymization algorithm which takes into account information loss as well as structural loss (from anonymizing the neighborhood of a network node). It is said to be greedy as it uses greedy clustering under the hood in order to avoid having to sift through an exponential solution space to find an optimum.
+
+
+\section{Basic Concepts}
+\label{sect:basic_concepts}
+
+\subsection{Tabular anonymization}
+\label{ssect:tab_anonym}
+
+Taking a look at Figure~\ref{fig:anon_categories} will help the reader in understanding the original (tabular) concept of anonymization: Given an input table with several columns, we will probably encounter three different categories of data:
+
+\begin{itemize}
+	\item \textbf{Personal identifiers} are data items which directly identify a person without having to cross-reference or further analyze them. Examples are first and last names, but even more so an (email) address or social security number (SSN). As personal identifiers are dangerous and cannot be generalized (see Figure~\ref{fig:gen_hierarchy}) in a meaningful way (e.g. one could generalize the \textit{address} field, which would only result in some kind of Zip code), this category of data is usually removed. The table shows this column in a red background color.
+	\item \textbf{Sensitive data,} also called 'payload', which is the kind of data we want to convey for statistics or research purposes. Examples for this category would be disease classification, drug intake or personal income level. This data shall be preserved in the anonymized dataset and can therefore not be deleted or generalized. The table shows this column in a green background color.
+	\item \textbf{Quasi identifiers}, colored in the table with an orange background, are data that in themselves do not directly reveal the identity of a person, but might be used in aggregate to reconstruct it. For instance, \cite{sweeney2002k} mentioned that 87\% of U.S. citizens in 2002 had reported characteristics that made them vulnerable to identification based on just the 3 attributes \textit{zip code}, \textit{gender} and \textit{date of birth}. But although this data can be harmful in that respect, it might also hold vital information for the purpose of research (e.g. zip code could be of high value in a study on disease spread). The solution - and this is the actual point of all anonymization efforts - is to generalize this kind of information, which means to lower its level of granularity. As an example, one could generalize the ZIP codes 41074, 41075 and 41099 to a generalized version 410**, as shown in Figure~\ref{fig:anonymized_clusters}.
+\end{itemize}
+
+\begin{figure}[!t]
+	\begin{center}
+		\includegraphics[width=0.9\textwidth]{figures/anonym/3typesofdata}
+		\caption{The three types of data considered in (k-)anonymization}
+		\label{fig:anon_categories}
+	\end{center}
+\end{figure}
+
+As described in \cite{ciriani2007kappa}, k-anonymization requires that in each data release every combination of values of quasi-identifiers must be identical to at least $k-1$ other entries in that release, which can be seen as a clustering problem with each cluster's (in the context of anonymization also called an 'equivalence class') internal quasi-identifier state being identical for every data point. This can be achieved via suppression and generalization, where suppression means simply deletion, whereas in generalization we try to retain some usable value.
+
+The process of generalization works through a concept called \textit{generalization hierarchies}, which form a tree whose root denotes the most general value available for a data category (usually the 'all' value) and then branches to more and more specific occurrences, with its leafs representing the set of exact, original values (see Figure~\ref{fig:gen_hierarchy}). In generalizing some original input value, one traverses the tree from the leaf level upwards until a certain prerequisite is fulfilled. Usually, this prerequisite comes in the form of the k-anonymity requirement, so that we want to find a group of other data rows (=vectors) whose (generalized) quasi identifiers match the data point being processed.
+
+\begin{figure}[!t]
+	\begin{center}
+		\includegraphics[width=0.8\textwidth]{figures/anonym/gen_hierarchy}
+		\caption{Example of a typical generalization hierarchy}
+		\label{fig:gen_hierarchy}
+		\small
+		taken from \cite{aggarwal2005approximation}
+	\end{center}
+\end{figure}
+
+
+Each level of generalization involves a certain cost in information loss though, which means we do not just want to construct our clusters in any sequence possible, but minimize the overall information loss. This makes k-anonymization an NP-hard optimization problem (because of an exponential number of possible generalized quasi-identifier combinations), leaving us to conclude that the k-Anonymity problem is to lose as little information as possible in a dataset while ensuring that the release (the anonymized, publishable version of the dataset) satisfies the k-anonymization criterion \cite{aggarwal2005approximation}.
+
+\begin{figure}[!t]
+	\centering
+	\begin{minipage}[b]{0.5\textwidth}
+		\includegraphics[width=\textwidth]{figures/anonym/k_anon_input}
+	\end{minipage}
+	\hfill
+	\begin{minipage}[b]{0.418\textwidth}
+		\includegraphics[width=\textwidth]{figures/anonym/k_anon_output}
+	\end{minipage}
+	\caption{Tabular anonymization: input table and anonymization result}
+	\label{fig:anonymized_clusters}
+\end{figure}
+
+
+\subsection{Graph (social network) anonymization}
+\label{ssect:graph_sn_anon}
+
+In the last section we were solely concerned with tabular data; However, as social networks have gained huge popularity over the previous decade, and even modern medical databases come in the form of graph structures, the question of how to efficiently anonymize networks has gained ever more significance over the years.
+
+As a start, one could see a graph just as a collection of nodes, where each node contains some kind of feature vector, akin to the row in a data table. Adopting that view, we could be tempted to simply ignore the existence of edges and apply some kind of algorithm suitable to the anonymization of tabular data. The main problem with this however lies in the fact that the structural environment of a node (the constellation of its neighbors within the greater network) provides some additional information. That is, even if we successfully (k-)anonymize the feature vectors of a graph according to the methods found in the previous chapter, we still run the risk of leaving to much information in the form of a known local subgraph structure.
+
+Consider Figure~\ref{fig:anon_sn_problem} for example, in which the nodes of a graph have already been k-anonymized into groups of size 3 and 7, respectively. In this figure, local subgraphs b) and c) are actually (3)-anonymized, because as each node has the exact same local neighborhood structure, the additional information of a node possessing a degree of 0 (or 2) is of no additional value. For local subgraphs a) and d) on the other hand, the additional information of a node being of degree (x) has the potential to reveal its identity, as it is not indistinguishable from its neighbors within the equivalence class any more.
+
+\begin{figure}[!t]
+	\begin{center}
+		\includegraphics[width=0.8\textwidth]{figures/anonym/sn_problem}
+		\caption{Local subgraph neighborhoods as additional anonymization obstacle.}
+		\label{fig:anon_sn_problem}
+	\end{center}
+	\small
+	(Example taken from \cite{campan2009data}.)
+\end{figure}
+
+
+\section{Related work}
+\label{sect:related_work}
+
+
+Several methods have been proposed to make re-identification of nodes in anonymized social graphs harder.	\cite{chester2011k} for example introduce the idea of vertex addition to labeled and unlabeled datasets. While an algorithm on the former remains NP complete, they provide an efficient ($O(nk)$) algorithm for unlabeled data. Experimenting on several well known datasets, they show that commonly-studied structural properties of the network, such as clustering coefficient, are only minorly distorted by their anonymization procedure.
+
+The authors of \cite{kapron2011social} take the approach of adding edges to an edge-labeled graph like the Netflix movie database (with users and movies being nodes and edge weights representing movie ratings). They define tables as bipartite graphs and prove NP-hardness for the problems of neighborhood anonymity, i-hop anonymity and k-symmetry anonymity.
+
+\cite{campan2009data}, whose local subgraph problem we already encountered, proposed a solution in the form of a greedy clustering algorithm which takes into account not only the information loss incurred by generalizing features of nodes, but also introducing a structural loss function based on the local neighborhood within an equivalence class (and between them). The author of this thesis implemented that approach utilizing GraphiniusJS and will demonstrate the algorithm in Section~\ref{sect:aoa_anonymization} as well as the anonymized results in Appendix Section~\ref{sect:anon_output_data}.
+
+
+\section{Experiments}
+\label{sect:experiments}
+
+
+\subsection{Data} 
+\label{ssect:data}
+
+
+\subsection{Experiments}
+\label{ssect:experiments}
+
+
+\subsection{Algorithm}
+\label{ssect:algorithm}
+
+
+SaNGreeA stands for \textit{Social network greedy clustering} and was introduced by \cite{campan2009data}. In addition to 'clustering' nodes of a graph according to the minimum general information loss (GIL) incurred as described in Section~\ref{sect:graph_sn_anon}, this algorithm also considers the structural information loss (SIL) by assigning a node to a certain cluster. The SIL quantifies the probability of error when trying to reconstruct the structure of the initial graph from its anonymized version.
+
+The SIL is composed of two different components: 1) the intra-cluster structural loss, signifying the error probability in trying to reconstruct the original edge distribution within an equivalence class (= anonymized cluster), and 2) the inter-cluster structural loss which represents the error probability in trying to reconstruct the original configuration of edges between two equivalence classes.
+
+In implementing and demonstrating this algorithm, I recreated the paper's original experiment:
+
+\begin{enumerate}
+	\item \textbf{Process input data into suitable structure.} The adults dataset was selected and all but six columns deleted - only Age, Workclass, Country of origin, Gender, Race and Marital status remained (a sample containing the first 19 rows can be seen in Figure~\ref{fig:adult_input_data_sample}). Furthermore, in order to obtain repeatable results, the first 300 'pure' rows (no missing or mis-formatted values) in the dataset were chosen as input set.
+	
+	\item \textbf{Enhance structure with graph information (random edges).} Using GraphiniusJS's capability of randomly adding edges to nodes, a connected graph was created out of the assortment of nodes (using between 1 and 10 outgoing edges per node).
+	
+	\item \textbf{Compute GIL \& NGIL.} The general information loss with respect to a cluster is given by the following formula (repeating from the original paper):
+	\begin{equation*}
+	\text{GIL}(cl) = \abs{cl} \cdot (\sum_{j=1}^{s} \frac{size(gen(cl)[N_j])}{size(min_{x \epsilon N} (X[N_j]), max_{x \epsilon N} (X[N_j]))} + \sum_{j=1}^{t} \frac{height(\Lambda(gen(cl)[C_j]))}{height(H_{C_j})})
+	\end{equation*}
+	where:\\
+	- $\abs{cl}$ denotes the cluster cl's cardinality; \\
+	- $size([i1,i2])$ is the size of the interval $[i1,i2]$, i.e., $(i2-i1)$; \\
+	- $\Lambda(w), w \epsilon H_{C_j}$ is the subhierarchy of $H_{C_j}$ rooted in $w$; \\
+	- $height(H_{C_j})$ denotes the height of the tree hierarchy $H_{C_j}$; \\
+	
+	The total generalization information loss is then given by:
+	\begin{equation*}
+	\text{GIL}(G,S) = \sum_{j=1}^{v} \text{GIL}(cl_j)
+	\end{equation*}
+	And the normalized generalization information loss by:
+	\begin{equation*}
+	\text{NGIL}(G,S) = \frac{\text{GIL}(G,S)}{n \cdot (s+t)}
+	\end{equation*}
+	
+	\item \textbf{Compute SIL \& NSIL.} For the exact mathematical definitions of SIL \& NSIL the reader is kindly referred to the original paper. Because the structural information loss cannot be computed exactly before the final construction of clusters, the exact computations were replaced by the following distance measures: \\
+	Distance between two nodes:
+	\begin{equation*}
+	\text{dist}(X^i, X^j) = \frac{\abs{\{l|l=1..n \wedge l \ne i,j;b_l^i \ne b_l^j}}{n-2}
+	\end{equation*}
+	
+	Distance between a node and a cluster:
+	\begin{equation*}
+	\text{dist}(X, cl) = \frac{\sum_{X^j \epsilon cl} \text{dist}(X, X^j) }{\abs{cl}}
+	\end{equation*}
+\end{enumerate}
+
+The algorithm starts with initializing a first cluster by simply adding a randomly chosen node to it. Then, for every new node encountered, the weighted sum of the above two information loss metrics will yield a certain overall information loss value if the node was added to that cluster - the node with the minimal cost is then chosen as the candidate and expands the cluster. This is repeated until the first cluster reaches a certain requirement (e.g. size $ \coloneqq  k $ -factor) upon which another random node is chosen to constitute a next cluster. This procedure is repeated until all nodes have been assigned (if a cluster of size < k-factor remains, its member nodes are dispersed amongst the others). 
+
+Since the algorithm does not take ALL possible node combinations into account, but simply start with a node and compares all the candidates in a loop, the algorithm runs in quadratic time w.r.t. the input size in number of nodes. This worked well within milliseconds for an input problem size of a few hundred nodes. An example output of the implemented algorithm can be found at \hl{Enter Graphinius URL here}. \\
+
+
+\begin{figure}[!t]
+	\begin{center}
+		\includegraphics[width=1\textwidth]{figures/anonym/anon_adults_input_sample_pic}
+		\caption{Excerpt: the first 25 rows of the Adult census data set}
+		\label{fig:adult_input_data_sample}
+	\end{center}
+\end{figure}
+
+
+\section{Results}
+\label{sect:results}
+
+
+\section{Discussion}
+\label{sect:discussion}
+
+
+\section{Open problems and future challenges}
+\label{sect:op_fc}
+
+
+\section{Conclusion}
+\label{sect:conclusion}
+
+
+
+\newpage
+
+\bibliographystyle{plain}
+\bibliography{references}
+
+\end{document}
+
+
+
+
+
+
+
+
+
+
+\begin{comment}
 At the beginning provide a motivation on why your paper is interesting. Example:
 ML is very broad and deals with the problem of extracting features from data to solve predictive tasks, including decision support, forecasting, ranking, classifying (e.g., in cancer diagnosis), detecting anomalies (e.g., virus mutations) or sentiment analysis \cite{PetzEtAl:2015:Sentiment}. The challenge is to discover relevant \emph{structural} patterns and/or \emph{temporal} patterns (``knowledge") in such data, which are often hidden and not accessible to the human expert. The problem is that a majority of the data sets in the biomedical domain are weakly-structured and non-standardized \cite{HolzingerEtAl:2014:KDDBio}, and most data is in dimensions much higher than $3$, and despite human experts are excellent in pattern recognition for dimensions $\leq 3$, such data make manual analysis often impossible.
 
@@ -66,34 +280,6 @@ This Styleguide for preparing an article for submission to the TRS has the follo
 % ~\ref{method}
 % ~\ref{style}
 
-\section{Glossary and Key Terms}
-
-\textbf{Note: This is only for use when producing a Springer LNCS SOTA State-of-the-Art-Analysis paper}
-\\[0,2cm]
-\emph{Open data} is any error, anomaly and/or undesired modification in the perception or representation of information from data.
-\\[0,2cm]
-\emph{Gaussian process} is a collection of random variables, any finite number of which have (consistent) joint Gaussian distributions..
-Carl Edward Rasmussen
-
-etc.
-etc.
-etc.
-define your key terms here
-
-etc.
-etc.
-etc.
-define your key terms here
-
-etc.
-etc.
-etc.
-define your key terms here
-
-etc.
-etc.
-etc.
-define your key terms here
 
 \section{\LaTeX~Requirements}\label{req}
 Prepare your TRS paper using {\bf \LaTeX} and the Springer-Verlag document class llncs.cls (see ~\cite{springer}).  There are a number of books that are helpful in showing how to use \LaTeX~(see, {\em e.g.},~\cite{math,graphics,companion}).  A tutorial to help you get started in preparing a~\LaTeX~document is available at~\cite{tutorial}.  To find the latest version of~\LaTeX, try~\cite{latest}. Articles written in Microsoft \textregistered~Word will not be accepted.
@@ -598,3 +784,5 @@ $\texttt{http://www.hep.man.ac.uk/u/jenny/jcwdocs/latex/figures.html}$
 \end{thebibliography}
 
 \end{document}
+
+\end{comment}
