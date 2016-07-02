@@ -1,7 +1,114 @@
-% Thank you for your interest to pursue your PhD within the Holzinger Group
-% Template modified by Andreas Holzinger 01.02.2015 17:00
-% Please treat EACH reference with care, be consistent, complete and overall careful (in German: sorgfältig, even if you are a Bachelor student)
-% CONTENT modified by XXXX on XX.XX.2015 XX:XX
+% 02.06.2016 ah
+
+@article{NergizClifton:2010:Delta-Presence,
+   year = {2010},
+   author = {Nergiz, M. E. and Clifton, C.},
+   title = {delta-Presence without Complete World Knowledge},
+   journal = {IEEE Transactions on Knowledge and Data Engineering},
+   volume = {22},
+   number = {6},
+   pages = {868-883},
+   abstract = {Advances in information technology, and its use in research, are increasing both the need for anonymized data and the risks of poor anonymization. In [1], we presented a new privacy metric, delta-presence, that clearly links the quality of anonymization to the risk posed by inadequate anonymization. It was shown that existing anonymization techniques are inappropriate for situations where delta-presence is a good metric (specifically, where knowing an individual is in the database poses a privacy risk). This article addresses a practical problem with [1], extending to situations where the data anonymizer is not assumed to have complete world knowledge. The algorithms are evaluated in the context of a real-world scenario, demonstrating practical applicability of the approach.},
+   keywords = {k-Anonymity, privacy, delta presence, medical databases},
+   doi = {10.1109/tkde.2009.125}
+}
+
+
+@inproceedings{LiEtAl:2007:t-closeness,
+   year = {2007},
+   author = {Li, Ninghui and Li, Tiancheng and Venkatasubramanian, Suresh},
+   title = {t-closeness: Privacy beyond k-anonymity and l-diversity},
+   booktitle = {IEEE 23rd International Conference on Data Engineering, ICDE 2007},
+   publisher = {IEEE},
+   pages = {106-115},
+   abstract = {The k-anonymity privacy requirement for publishing microdata requires that each equivalence class (i.e., a set of records that are indistinguishable from each other with respect to certain "identifying" attributes) contains at least k records. Recently, several authors have recognized that k-anonymity cannot prevent attribute disclosure. The notion of l-diversity has been proposed to address this; l-diversity requires that each equivalence class has at least l well-represented values for each sensitive attribute. In this paper we show that l-diversity has a number of limitations. In particular, it is neither necessary nor sufficient to prevent attribute disclosure. We propose a novel privacy notion called t-closeness, which requires that the distribution of a sensitive attribute in any equivalence class is close to the distribution of the attribute in the overall table (i.e., the distance between the two distributions should be no more than a threshold t). We choose to use the earth mover distance measure for our t-closeness requirement. We discuss the rationale for t-closeness and illustrate its advantages through examples and experiments.},
+   doi = {10.1109/ICDE.2007.367856}
+}
+
+
+@article{MachanavajjhalaEtAl:2007:l-Diversity,
+   year = {2007},
+   author = {Machanavajjhala, Ashwin and Kifer, Daniel and Gehrke, Johannes and Venkitasubramaniam, Muthuramakrishnan},
+   title = {l-diversity: Privacy beyond k-anonymity},
+   journal = {ACM Transactions on Knowledge Discovery from Data (TKDD)},
+   volume = {1},
+   number = {1},
+   pages = {1-52},
+   abstract = {Publishing data about individuals without revealing sensitive information about them is an important problem. In recent years, a new definition of privacy called k-anonymity has gained popularity. In a k-anonymized dataset, each record is indistinguishable from at least k − 1 other records with respect to certain identifying attributes. In this article, we show using two simple attacks that a k-anonymized dataset has some subtle but severe privacy problems. First, an attacker can discover the values of sensitive attributes when there is little diversity in those sensitive attributes. This is a known problem. Second, attackers often have background knowledge, and we show that k-anonymity does not guarantee privacy against attackers using background knowledge. We give a detailed analysis of these two attacks, and we propose a novel and powerful privacy criterion called ℓ-diversity that can defend against such attacks. In addition to building a formal foundation for ℓ-diversity, we show in an experimental evaluation that ℓ-diversity is practical and can be implemented efficiently.},
+   doi = {10.1145/1217299.1217302}
+}
+
+
+
+@article{Kieseberg:2016:Doctor-in-the-Loop,
+   year = {2016},
+   author = {Kieseberg, Peter and Malle, Bernd and Frühwirt, Peter and Weippl, Edgar and Holzinger, Andreas},
+   title = {A tamper-proof audit and control system for the doctor in the loop},
+   journal = {Brain Informatics},
+   pages = {1-11},
+   abstract = {The “doctor in the loop” is a new paradigm in information-driven medicine, picturing the doctor as authority inside a loop supplying an expert system with information on actual patients, treatment results, and possible additional (side-)effects, including general information in order to enhance data-driven medical science, as well as giving back treatment advice to the doctor himself. While this approach can be very beneficial for new medical approaches like P4 medicine (personal, predictive, preventive, and participatory), it also relies heavily on the authenticity of the data and thus increases the need for secure and reliable databases. In this paper, we propose a solution in order to protect the doctor in the loop against responsibility derived from manipulated data, thus enabling this new paradigm to gain acceptance in the medical community. This work is an extension of the conference paper Kieseberg et al. (Brain Informatics and Health, 2015), which includes extensions to the original concept.},
+   doi = {10.1007/s40708-016-0046-2},
+   url = {http://dx.doi.org/10.1007/s40708-016-0046-2}
+}
+
+
+
+@article{Holzinger:2016:iML,
+   year = {2016},
+   author = {Holzinger, Andreas},
+   title = {Interactive Machine Learning for Health Informatics: When do we need the human-in-the-loop?},
+   journal = {Springer Brain Informatics (BRIN)},
+   volume = {3},
+   number = {2},
+   pages = {119-131},
+   abstract = {Machine learning (ML) is the fastest growing field in computer science, and health informatics is amongst the greatest challenges. The goal of ML is to develop algorithms which can learn and improve over time and can be used for predictions. Most ML researchers concentrate on automatic Machine Learning (aML), where great advances have been made, for example, in speech recognition, recommender systems, or autonomous vehicles. Automatic approaches greatly benefit from big data with many training sets. However, in the health domain, sometimes we are confronted with a small number of data sets or rare events, where aML-approaches suffer of insufficient training samples. Here interactive Machine Learning (iML) may be of help, having its roots in Reinforcement Learning (RL), Preference Learning (PL) and Active Learning (AL). The term iML is not yet well used, so we define it as algorithms that can interact with agents and can optimize their learning behaviour through these interactions, where the agents can also be human. This human-in-the-loop can be beneficial in solving computationally hard problems, e.g., subspace clustering, protein folding, or k-anonymization of health data, where human expertise can help to reduce an exponential search space through heuristic selection of samples. Therefore, what would otherwise be an NP-hard problem, reduces greatly in complexity through the input and the assistance of a human agent involved in the learning phase.},
+   keywords = {interactive Machine learning, health informatics},
+   doi = {10.1007/s40708-016-0042-6},
+   url = {http://dx.doi.org/10.1007/s40708-016-0042-6}
+}
+
+
+@article{Sweeney:2002:k-Anonymity,
+   year = {2002},
+   author = {Sweeney, Latanya},
+   title = {Achieving k-anonymity privacy protection using generalization and suppression},
+   journal = {International Journal of Uncertainty, Fuzziness and Knowledge-Based Systems},
+   volume = {10},
+   number = {5},
+   pages = {571-588},
+   abstract = {Consider a data holder, such as a hospital or a bank, that has a privately held collection of person-specific, field structured data. Suppose the data holder wants to share a version of the data with researchers. How can a data holder release a version of its private data with scientific guarantees that the individuals who are the subjects of the data cannot be re-identified while the data remain practically useful? The solution provided in this paper includes a formal protection model named k-anonymity and a set of accompanying policies for deployment. A release provides k-anonymity protection if the information for each person contained in the release cannot be distinguished from at least k-1 individuals whose information also appears in the release. This paper also examines re-identification attacks that can be realized on releases that adhere to k-anonymity unless accompanying policies are respected. The k-anonymity protection model is important because it forms the basis on which the real-world systems known as Datafly, μ-Argus and k-Similar provide guarantees of privacy protection.},
+   keywords = {Data anonymity; data privacy; re-identification; data fusion; privacy},
+   doi = {10.1142/S0218488502001648 },
+   url = {http://www.worldscientific.com/doi/abs/10.1142/S0218488502001648}
+}
+
+@inproceedings{Aggarwal:2005:kAnonymity,
+   year = {2005},
+   author = {Aggarwal, Charu C},
+   title = {On k-anonymity and the curse of dimensionality},
+   booktitle = {Proceedings of the 31st international conference on Very large data bases VLDB},
+   pages = {901-909},
+   abstract = {In recent years, the wide availability of personal data has made the problem of privacy preserving data mining an important one. A number of methods have recently been proposed for privacy preserving data mining of multidimensional data records. One of the methods for privacy preserving data mining is that of anonymization, in which a record is released only if it is indistinguishable from k other entities in the data. We note that methods such as k-anonymity are highly dependent upon spatial locality in order to effectively implement the technique in a statistically robust way. In high dimensional space the data becomes sparse, and the concept of spatial locality is no longer easy to define from an application point of view. In this paper, we view the k-anonymization problem from the perspective of inference attacks over all possible combinations of attributes. We show that when the data contains a large number of attributes which may be considered quasi-identifiers, it becomes difficult to anonymize the data without an unacceptably high amount of information loss. This is because an exponential number of combinations of dimensions can be used to make precise inference attacks, even when individual attributes are partially specified within a range. We provide an analysis of the effect of dimensionality on k-anonymity methods. We conclude that when a data set contains a large number of attributes which are open to inference attacks, we are faced with a choice of either completely suppressing most of the data or losing the desired level of anonymity. Thus, this paper shows that the curse of high dimensionality also applies to the problem of privacy preserving data mining.}
+}
+
+@article{Samarati:2001:kAnonymity,
+   year = {2001},
+   author = {Samarati, Pierangela},
+   title = {Protecting respondents identities in microdata release},
+   journal = {IEEE Transactions on Knowledge and Data Engineering},
+   volume = {13},
+   number = {6},
+   pages = {1010-1027},
+   abstract = {Today’s globally networked society places great demand on the dissemination and sharing of information. While in the past released information was mostly in tabular and statistical form, many situations call today for the release of specific data (microdata). In order to protect the anonymity of the entities (called respondents) to which information refers, data holders often remove or encrypt explicit identifiers such as names, addresses, and phone numbers. De-identifying data, however, provides no guarantee of anonymity. Released information often contains other data, such as race, birth date, sex, and ZIP code, that can be linked to publicly available information to re-identify respondents and inferring information that was not intended for disclosure. In this paper we address the problem of releasing microdata while safeguarding the anonymity of the respondents to which the data refer. The approach is based on the definition of k-anonymity . A table provides k-anonymity if attempts to link explicitly identifying information to its content map the information to at least k entities. We illustrate how k-anonymity can be provided without compromising the integrity (or truthfulness) of the information released by using generalization and suppression techniques. We introduce the concept of minimal generalization that captures the property of the release process not to distort the data more than needed to achieve k-anonymity, and present an algorithm for the computation of such a generalization. We also discuss possible preference policies to choose among different minimal generalizations. },
+   keywords = {Privacy, Data Protection},
+   doi = {10.1109/69.971193},
+   url = {http://spdp.di.unimi.it/papers/tkde_k-anonymity.pdf}
+}
+
+
+
+
+
 
 %[1]
 @incollection{HolzingerMalleGiuliani2014GraphExtraction,

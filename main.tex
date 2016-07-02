@@ -1,4 +1,4 @@
-% 26.05.2016 18:00 CET last changed by a.holzinger
+% 02.06.2016 12:00 CET last changed by a.holzinger
 % General Template for LNCS and LNAI contributions based on llncs, adapted by ah
 % Many thanks to the TRS team
 % In case of using eps compile via 1) TeXify and then proceed with 2) dvi2pdf
@@ -28,8 +28,8 @@
 
 \begin{document}
 
-\title{Paper on Privacy-Preserving Machine Learning:  \protect\newline
-Draft for Salzburg and FWF-Proposal}
+\title{Testing the impact of the right-to-forget  \protect\newline
+on knowledge bases}
 
 \author{Bernd Malle, Peter Kieseberg, Andreas Holzinger}
 \institute{Holzinger Group HCI-KDD \\
@@ -63,13 +63,16 @@ We will present our work by demonstrating a Web-based User Interface to conduct 
 
 \section{Introduction and Motivation for Research}
 
+Privacy preserving machine learning is an important issue, fostered by anonymization \cite{Samarati:2001:kAnonymity}, in which a record is released only if it is indistinguishable from $k$ other entities in the data. k-anonymity is highly dependent on spatial locality in order to effectively implement the technique in a statistically robust way, and in high dimensionalities data becomes sparse, hence, the concept of spatial locality is not easy to define. Consequently, it becomes difficult to anonymize the data without an unacceptably high amount of information loss \cite{Aggarwal:2005:kAnonymity}. Consequently, the problem of k-anonymization is on the one hand NP-hard, on the other hand the quality of the result obtained can be measured at the given factors: \emph{k-anonymity} means that attributes are suppressed or generalized until each row in a database is identical with at least $k-1$ other rows   \cite{Sweeney:2002:k-Anonymity}; \emph{l-diversity} as extension of the k-anonymity model reduces the granularity of data representation by generalization and suppression so that any given record maps onto at least $k$ other records in the data \cite{MachanavajjhalaEtAl:2007:l-Diversity}; \emph{t-closeness} is a refinement of l-diversity by reducing the granularity of a data representation, and treating the values of an attribute distinctly by taking into account the distribution of data values for that attribute \cite{LiEtAl:2007:t-closeness}; and \emph{delta-presence}, which links the quality of anonymization to the risk posed by inadequate anonymization \cite{NergizClifton:2010:Delta-Presence}, but not with regard to the actual security of the data, i.e., the re-identification through an attacker. For this purpose certain assumptions about the background knowledge of the hypothetical enemy must be made. With regard to the particular demographic and cultural clinical environment this is best done by a human agent. Thus, the problem of (k-)anonymization represents a natural application domain for iML \cite{Holzinger:2016:iML}, \cite{Kieseberg:2016:Doctor-in-the-Loop}.
 
+\begin {comment}
 \section{Glossary and Key Terms}
-
+NOTE: this section may not to be used for a conference
 \textbf{Note: This is only for use when producing a Springer LNCS SOTA State-of-the-Art-Analysis paper}
 \\[0,2cm]
 \emph{SaNGreeA} is the abbreviation for Social Network Greedy Anonymization, which describes an anonymization algorithm which takes into account information loss as well as structural loss (from anonymizing the neighborhood of a network node). It is said to be greedy as it uses greedy clustering under the hood in order to avoid having to sift through an exponential solution space to find an optimum.
 
+\end{comment}
 
 \section{Basic Concepts}
 \label{sect:basic_concepts}
