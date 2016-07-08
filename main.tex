@@ -1,4 +1,4 @@
-% 02.06.2016 12:00 CET last changed by a.holzinger
+% 08.07.2016 21:00 CET last changed by a.holzinger
 % General Template for LNCS and LNAI contributions based on llncs, adapted by ah
 % Many thanks to the TRS team
 % In case of using eps compile via 1) TeXify and then proceed with 2) dvi2pdf
@@ -100,7 +100,7 @@ Taking a look at Figure~\ref{fig:anon_categories} will help the reader in unders
 
 As described in \cite{ciriani2007kappa}, k-anonymization requires that in each data release every combination of values of quasi-identifiers must be identical to at least $k-1$ other entries in that release, which can be seen as a clustering problem with each cluster's (in the context of anonymization also called an 'equivalence class') internal quasi-identifier state being identical for every data point. This can be achieved via suppression and generalization, where suppression means simply deletion, whereas in generalization we try to retain some usable value.
 
-The process of generalization works through a concept called \textit{generalization hierarchies}, which form a tree, whose root denotes the most general value available for a data category (usually the 'all' value) and then branches to more and more specific occurrences, with its leafs representing the set of exact, original values (see Figure~\ref{fig:gen_hierarchy}). In generalizing some original input value, one traverses the tree from the leaf level upwards until a certain prerequisite is fulfilled. Usually, this prerequisite comes in the form of the k-anonymity requirement, so that we want to find a group of other data rows (=vectors) whose (generalized) quasi identifiers match the data point being processed.
+The process of generalization works through a concept called \textit{generalization hierarchies}, which forms a tree, whose root denotes the most general value available for a data category (usually the 'all' value) and then branches to more and more specific occurrences, with its leafs representing the set of exact, original values (see Figure~\ref{fig:gen_hierarchy}). In generalizing some original input value, one traverses the tree from the leaf level upwards until a certain prerequisite is fulfilled. Usually, this prerequisite comes in the form of the k-anonymity requirement, so that we want to find a group of other data rows (=vectors) whose (generalized) quasi identifiers match the data point being processed.
 
 \begin{figure}[!t]
 	\begin{center}
