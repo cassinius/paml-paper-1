@@ -40,6 +40,9 @@ Institute for Medical Informatics, Statistics \& Documentation\\
 
 \maketitle
 
+% ==================================
+%				ABSTRACT
+% ==================================
 \begin{abstract}
 	
 The amount of patient-related data produced in today’s clinical setting poses many challenges with respect to collection, storage and responsible use. For example, in research and public health care analysis, data must be anonymized before transfer, for which the k-anonymity measure was introduced and successively enhanced by further criteria. As k-anonymity is an NP-hard problem, modern approaches often make use of heuristics based methods. This paper will convey the motivation for anonymization followed by an outline of its criteria as well as a general overview of methods \& algorithmic approaches to tackle the problem. As the resulting data set will represent a trade-off between utility and individual privacy, we need to optimize those measures to individual (subjective) standards. Moreover, the efficacy of an algorithm strongly depends on the background knowledge of a potential attacker as well as the underlying problem domain. Therefore, it seems logical to adapt the process including expert domain knowledge, which can be done via an interactive machine learning (iML) approach. We will therefore point out how domain experts might get involved to improve upon current methods and introduce an example setup based on the SaNGreeA algorithm; due to this algorithm's nature of taking into account structural (network) as well as information properties of the underlying problem domain, it can be useful for (but also limited to) common tabular data anonymization. Finally, we present our work by demonstrating a Web-based User Interface to conduct interactive machine learning tasks and compare the results of a variety of different parameter settings from our iML experiments with a standard industry anonymization algorithm in terms of efficiency, information loss as well as threat scenarios.
@@ -57,21 +60,24 @@ The amount of patient-related data produced in today’s clinical setting poses 
 \renewcommand{\@thesubfigure}{\thesubfigure:\hskip\subfiglabelskip}
 \makeatother
 
+
+% ==================================
+%			INTRODCUTION
+% ==================================
 \section{Introduction and Motivation for Research}
 
 Privacy preserving machine learning \cite{DuchiJordan:2014:PrivacyAwareLearning} is an issue of increasing importance, fostered by anonymization \cite{Samarati:2001:kAnonymity}, in which a record is released only if it is indistinguishable from $k$ other entities in the data. However, k-anonymity is highly dependent on spatial locality in order to effectively implement the technique in a statistically robust way, and in arbitrarily high dimensions data becomes sparse, hence, the concept of spatial locality is not easy to define. Consequently, it becomes difficult to anonymize the data without an unacceptably high amount of information loss \cite{Aggarwal:2005:kAnonymity}. Therefore the problem of k-anonymization is on the one hand NP-hard, on the other hand the quality of the result obtained can be measured at the given factors: \emph{k-anonymity} means that attributes are suppressed or generalized until each row in a database is identical with at least $k-1$ other rows \cite{Sweeney:2002:k-Anonymity}; \emph{l-diversity} as extension of the k-anonymity model reduces the granularity of data representation by generalization and suppression so that any given record maps onto at least $k$ other records in the data \cite{MachanavajjhalaEtAl:2007:l-Diversity}; \emph{t-closeness} is a refinement of l-diversity by reducing the granularity of a data representation, and treating the values of an attribute distinctly by taking into account the distribution of data values for that attribute \cite{LiEtAl:2007:t-closeness}; and \emph{delta-presence}, which links the quality of anonymization to the risk posed by inadequate anonymization \cite{NergizClifton:2010:Delta-Presence}, but not with regard to the actual security of the data, i.e., the re-identification through an attacker. For this purpose, certain assumptions about the background knowledge of the hypothetical enemy must be made. With regard to the particular demographic and cultural clinical environment this is best done by a human agent. Thus, the problem of (k-)anonymization represents a natural application domain for interactive Machine Learning (iML) with an human-in-the-loop \cite{Holzinger:2016:iML}, \cite{Kieseberg:2016:Doctor-in-the-Loop},  \cite{iMLExperiment}.
 
-\begin {comment}
-\section{Glossary and Key Terms}
-NOTE: this section may not to be used for a conference
-\textbf{Note: This is only for use when producing a Springer LNCS SOTA State-of-the-Art-Analysis paper}
-\\[0,2cm]
-\emph{SaNGreeA} is the abbreviation for Social Network Greedy Anonymization, which describes an anonymization algorithm which takes into account information loss as well as structural loss (from anonymizing the neighborhood of a network node). It is said to be greedy as it uses greedy clustering under the hood in order to avoid having to sift through an exponential solution space to find an optimum.
 
-\end{comment}
-
+% ==================================
+%			BASIC CONCEPTS
+% ==================================
 \section{Basic Concepts}
 \label{sect:basic_concepts}
+
+
+\subsection{Selective perturbation}
+
 
 \subsection{Tabular anonymization}
 \label{ssect:tab_anonym}
@@ -144,6 +150,10 @@ Consider Figure~\ref{fig:anon_sn_problem} for example, in which the nodes of a g
 \end{figure}
 
 
+
+% ==================================
+%			RELATED WORK
+% ==================================
 \section{Related work}
 \label{sect:related_work}
 
@@ -161,6 +171,9 @@ The authors of \cite{kapron2011social} take the approach of adding edges to an e
 \cite{campan2009data}, whose local subgraph problem we already encountered, proposed a solution in the form of a greedy clustering algorithm which takes into account not only the information loss incurred by generalizing features of nodes, but also introducing a structural loss function based on the local neighborhood within an equivalence class (and between them). The author of this thesis implemented that approach utilizing GraphiniusJS and will demonstrate the algorithm in Section~\ref{ssect:algorithm} as well as the anonymized results in Section~\ref{sect:results}.
 
 
+% ==================================
+%				EXPERIMENTS
+% ==================================
 \section{Experiments}
 \label{sect:experiments}
 
@@ -170,7 +183,7 @@ The following sections will describe our series of experiments in detail, encomp
 \subsection{Data} 
 \label{ssect:data}
 
-As input data we chose the adults dataset 
+As input data we chose the adults dataset from the UCI Machine Learning repository which was generated from US census data of 1994 and contains approximately 32,000 entries; from those 30,162 were selected after preprocessing. Of the attributes (data columns) provided only one was deleted because it was also represented by column containing its numerical mapping (education $=>$ education\_num). The following diagram shows the attribute value distribution of the original input dataset with the exception of the sample weights:
 
 
 \begin{figure}[H]
@@ -182,11 +195,13 @@ As input data we chose the adults dataset
 	\end{center}
 \end{figure}
 
+As one can see, there are several attributes with one value clearly dominating the others; \textit{native-country} being the most prominent example with the entry for the United States dwarfing all other countries (which comes as no surprise given the data origin). As anonymization generalizes different countries together if necessary, it was interesting for the author to see how these distributions would change under a relatively large k-factor. The next diagram shows the same attribute distribution with its values anonymized by a factor of $k=19$. Although the dominance of the United states was successfully "broken" by this method, in several instances the \textit{generalized-to-all}-value now skews the data set even more. Apart from the expected generalization information loss this is another reason why we would assume worse results from a machine learning classifier applied to an anonymized dataset.
+
 \begin{figure}[H]
 	\begin{center}
     	\hspace*{-1cm}
 		\includegraphics[width=1.2\textwidth]{figures/experiment/anon_distribution}
-		\caption{Distribution of the data columns of the adult dataset with an anonymization factor of k=19}
+		\caption{Distribution of the attribute values of the adult dataset with an anonymization factor of k=19, equal weight for each attribute.}
 		\label{fig:adult_anonymized_distribution}
 	\end{center}
 \end{figure}
@@ -194,6 +209,18 @@ As input data we chose the adults dataset
 
 \subsection{Process}
 \label{ssect:process}
+
+To examine the impact of perturbation and anonymization of datasets on the quality of a classification result, we designed the following processing pipeline:
+
+\begin{enumerate}
+	\item Taking the original (preprocessed) dataset as input, we transformed its attributes to boolean values, so instead of \textit{native-country $->$ United-States} we considered \textit{United-States $->$ yes / no}.
+	\item A correlation matrix of the resulting binary feature set was computed to get a better feeling for the data (see Figure~\ref{fig:adult_correlation_big}).
+	\item We then ran 5 different classifiers on it and computed precision, recall as well as F1 score. The five classifiers used were \textit{gradient boosting}, \textit{random forest}, \textit{logistic regression}, \textit{one vs. rest with bagging} and \textit{linear SVC}.
+	\item From the obtained results we extracted the 3 attribute values most contributing to a "positive" ($>$50k) result as well as the top 3 attribute values indicating a "negative" ($<=$50k) prediction.
+	\item For each of these 6 attribute values, we subsequently deleted a specific percentage of data rows containing that value from the original dataset, resulting in $6 * 5 = 30$ reduced datasets. The 5 percentages used were $0.2$, $0.4$, $0.6$, $0.8$ as well as $1.0$.
+	\item To each of those datasets we re-applied the five chosen classifiers successively and recorded the respective impact on the quality of the classification result. The results can be seen in Figure~\ref{fig:adult_results_perturbation_top} and Figure~\ref{fig:adult_results_perturbation_bottom}.
+\end{enumerate}
+
 
 \begin{figure}[H]
 	\begin{center}
@@ -204,11 +231,12 @@ As input data we chose the adults dataset
 	\end{center}
 \end{figure}
 
+
 \begin{figure}[H]
 	\begin{center}
     	\hspace*{-1.5cm}
 		\includegraphics[width=1.3\textwidth]{figures/experiment/important_columns}
-		\caption{The attribute values of the adult dataset which contribute most positively / negatively to the classification result}
+		\caption{The attribute values of the adult dataset which contribute most positively / negatively to the classification result. The columns to the right strongly indicate a yearly income of above 50k, whereas the columns to the outer left indicate a yearly income of below 50k.}
 		\label{fig:adult_important_columns}
 	\end{center}
 \end{figure}
@@ -221,7 +249,7 @@ SaNGreeA stands for \textit{Social network greedy clustering} and was introduced
 
 The SIL is composed of two different components: 1) the intra-cluster structural loss, signifying the error probability in trying to reconstruct the original edge distribution within an equivalence class (= anonymized cluster), and 2) the inter-cluster structural loss which represents the error probability in trying to reconstruct the original configuration of edges between two equivalence classes.
 
-In implementing and demonstrating this algorithm, I recreated the paper's original experiment:
+In implementing and demonstrating this algorithm, the author recreated the paper's original experiment:
 
 \begin{enumerate}
 	\item \textbf{Process input data into suitable structure.} The adults dataset was selected and all but six columns deleted - only Age, Workclass, Country of origin, Gender, Race and Marital status remained (a sample containing the first 19 rows can be seen in Figure~\ref{fig:adult_input_data_sample}). Furthermore, in order to obtain repeatable results, the first 300 'pure' rows (no missing or mis-formatted values) in the dataset were chosen as input set.
@@ -270,8 +298,13 @@ The algorithm starts with initializing a first cluster by simply adding a random
 Since the algorithm does not take ALL possible node combinations into account, but simply start with a node and compares all the candidates in a loop, the algorithm runs in quadratic time w.r.t. the input size in number of nodes. This worked well within milliseconds for an input problem size of a few hundred nodes. An example output of the implemented algorithm can be found at \hl{Enter Graphinius URL here}. \\
 
 
-\section{Results}
+% ==================================
+%		RESULTS & DISCUSSION
+% ==================================
+\section{Results \& Discussion}
 \label{sect:results}
+
+
 
 \begin{figure}[H]
 	\begin{center}
@@ -305,20 +338,21 @@ Since the algorithm does not take ALL possible node combinations into account, b
 		\includegraphics[width=0.32\textwidth]{figures/results/perturb_onevsrest_bagging_bottom}
 		\includegraphics[width=0.32\textwidth]{figures/results/perturb_random_forest_bottom}
 		\caption{The impact of perturbation (selectively deleting quantiles of rows containing one of the BOTTOM 3 contributing attributes) on the F1 score of different classifiers}
-		\label{fig:adult_results_perturbation_top}
+		\label{fig:adult_results_perturbation_bottom}
 	\end{center}
 \end{figure}
 
 
-
-\section{Discussion}
-\label{sect:discussion}
-
-
+% ==================================
+%			OPEN PROBLEMS
+% ==================================
 \section{Open problems and future challenges}
 \label{sect:op_fc}
 
 
+% ==================================
+%			CONCLUSION
+% ==================================
 \section{Conclusion}
 \label{sect:conclusion}
 
@@ -330,3 +364,12 @@ Since the algorithm does not take ALL possible node combinations into account, b
 \bibliography{references}
 
 \end{document}
+
+
+% \begin {comment}
+% \section{Glossary and Key Terms}
+% NOTE: this section may not to be used for a conference
+% \textbf{Note: This is only for use when producing a Springer LNCS SOTA State-of-the-Art-Analysis paper}
+% \\[0,2cm]
+% \emph{SaNGreeA} is the abbreviation for Social Network Greedy Anonymization, which describes an anonymization algorithm which takes into account information loss as well as structural loss (from anonymizing the neighborhood of a network node). It is said to be greedy as it uses greedy clustering under the hood in order to avoid having to sift through an exponential solution space to find an optimum.
+% \end{comment}
