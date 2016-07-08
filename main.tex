@@ -228,10 +228,16 @@ In implementing and demonstrating this algorithm, I recreated the paper's origin
 	
 	\item \textbf{Enhance structure with graph information (random edges).} Using GraphiniusJS's capability of randomly adding edges to nodes, a connected graph was created out of the assortment of nodes (using between 1 and 10 outgoing edges per node).
 	
+
 	\item \textbf{Compute GIL \& NGIL.} The general information loss with respect to a cluster is given by the following formula (repeating from the original paper):
 	\begin{equation*}
-	\text{GIL}(cl) = \abs{cl} \cdot (\sum_{j=1}^{s} \frac{size(gen(cl)[N_j])}{size(min_{x \epsilon N} (X[N_j]), max_{x \epsilon N} (X[N_j]))} + \sum_{j=1}^{t} \frac{height(\Lambda(gen(cl)[C_j]))}{height(H_{C_j})})
+    \begin{split}
+	\text{GIL}(cl) = \abs{cl} \cdot (\sum_{j=1}^{s} \frac{size(gen(cl)[N_j])}{size(min_{x \epsilon N} (X[N_j]), max_{x \epsilon N} (X[N_j]))} \\ 
+    + \sum_{j=1}^{t} \frac{height(\Lambda(gen(cl)[C_j]))}{height(H_{C_j})})    
+    \end{split}    
 	\end{equation*}
+    
+    
 	where:\\
 	- $\abs{cl}$ denotes the cluster cl's cardinality; \\
 	- $size([i1,i2])$ is the size of the interval $[i1,i2]$, i.e., $(i2-i1)$; \\
