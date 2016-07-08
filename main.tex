@@ -107,7 +107,8 @@ The process of generalization works through a concept called \textit{generalizat
 \end{figure}
 
 
-Each level of generalization involves a certain cost in information loss though, which means we do not just want to construct our clusters in any sequence possible, but minimize the overall information loss. This makes k-anonymization an NP-hard optimization problem (because of an exponential number of possible generalized quasi-identifier combinations), leaving us to conclude that the k-Anonymity problem is to lose as little information as possible in a dataset while ensuring that the release (the anonymized, publishable version of the dataset) satisfies the k-anonymization criterion \cite{aggarwal2005approximation}.
+Each level of generalization involves a certain cost in information loss, which means we do not want to construct our clusters in any sequence possible, but minimize the overall information loss \cite{aggarwal2005approximation}. This makes k-anonymization an NP-hard problem due to an exponential number of possible generalized quasi-identifier combinations.
+
 
 \begin{figure}[!t]
 	\centering
@@ -126,11 +127,11 @@ Each level of generalization involves a certain cost in information loss though,
 \subsection{Graph (social network) anonymization}
 \label{ssect:graph_sn_anon}
 
-In the last section we were solely concerned with tabular data; However, as social networks have gained huge popularity over the previous decade, and even modern medical databases come in the form of graph structures, the question of how to efficiently anonymize networks has gained ever more significance over the years.
+Hitherto we were solely concerned with tabular data; however, as social networks have gained huge popularity over the previous decade, and are widely applicable in other areas as well, the question of how to efficiently anonymize networks has gained ever more significance over the years.
 
-As a start, one could see a graph just as a collection of nodes, where each node contains some kind of feature vector, akin to the row in a data table. Adopting that view, we could be tempted to simply ignore the existence of edges and apply some kind of algorithm suitable to the anonymization of tabular data. The main problem with this however lies in the fact that the structural environment of a node (the constellation of its neighbors within the greater network) provides some additional information. That is, even if we successfully (k-)anonymize the feature vectors of a graph according to the methods found in the previous chapter, we still run the risk of leaving to much information in the form of a known local subgraph structure.
+As a start, one could see a graph just as a collection of nodes, where each node contains some kind of feature vector, akin to the row in a data table. Adopting that view, we could be tempted to simply ignore the existence of edges and apply some kind of algorithm suitable to the anonymization of tabular data. The main problem with this however lies in the fact that the structural environment of a node (the constellation of its neighbors within the greater network) provides some additional information. That is, even if we successfully (k-)anonymize the feature vectors of a graph according to the methods described in the previous chapter, we still run the risk of too much information remaining in the form of a known local subgraph structure.
 
-Consider Figure~\ref{fig:anon_sn_problem} for example, in which the nodes of a graph have already been k-anonymized into groups of size 3 and 7, respectively. In this figure, local subgraphs b) and c) are actually (3)-anonymized, because as each node has the exact same local neighborhood structure, the additional information of a node possessing a degree of 0 (or 2) is of no additional value. For local subgraphs a) and d) on the other hand, the additional information of a node being of degree (x) has the potential to reveal its identity, as it is not indistinguishable from its neighbors within the equivalence class any more.
+Consider Figure~\ref{fig:anon_sn_problem} for example, in which the nodes of a graph have already been k-anonymized into groups of size 3 and 7, respectively. In this figure, local subgraphs b) and c) are actually (3)-anonymized, because as each node has the exact same local neighborhood structure, the additional information of a node possessing a degree of 0 (or 2) is of no additional value. For local subgraphs a) and d) on the other hand, the additional information of a node being of degree (x) has the potential to reveal its identity, meaning it is not indistinguishable from its neighbors within the equivalence class any more.
 
 \begin{figure}[!t]
 	\begin{center}
@@ -149,7 +150,7 @@ Consider Figure~\ref{fig:anon_sn_problem} for example, in which the nodes of a g
 
 Several methods have been proposed to make re-identification of nodes in anonymized social graphs harder.	\cite{chester2011k} for example introduce the idea of vertex addition to labeled and unlabeled datasets. While an algorithm on the former remains NP complete, they provide an efficient ($O(nk)$) algorithm for unlabeled data. Experimenting on several well known datasets, they show that commonly-studied structural properties of the network, such as clustering coefficient, are only minorly distorted by their anonymization procedure.
 
-Person re-identification is both a hard and important problem in many different domains and is challenging. Most approaches aim to model and extract distinctive and reliable features. However, seeking an optimal and robust similarity measure that quantifies a wide range of features against realistic conditions from a distance is still an open and unsolved problem for person reidentification  reidentification techniques \cite{Zheng:2013:reidentification}. 
+Person re-identification is both a hard and important problem in many different domains and is challenging. Most approaches aim to model and extract distinctive and reliable features. However, seeking an optimal and robust similarity measure that quantifies a wide range of features against realistic conditions from a distance is still an open and unsolved problem for person re-identification techniques \cite{Zheng:2013:reidentification}. 
 
 In order to develop protection techniques in social networks it is necessary to consider three aspects \cite{Zhou:2008:SurveyAnonNetwork}: 1) the privacy information which may be
 under attack; 2) the background knowledge that an adversary may use to attack the privacy
@@ -157,15 +158,19 @@ of target individuals; and 3) a specification of the usage of the published soci
 
 The authors of \cite{kapron2011social} take the approach of adding edges to an edge-labeled graph like the Netflix movie database (with users and movies being nodes and edge weights representing movie ratings). They define tables as bipartite graphs and prove NP-hardness for the problems of neighborhood anonymity, i-hop anonymity and k-symmetry anonymity.
 
-\cite{campan2009data}, whose local subgraph problem we already encountered, proposed a solution in the form of a greedy clustering algorithm which takes into account not only the information loss incurred by generalizing features of nodes, but also introducing a structural loss function based on the local neighborhood within an equivalence class (and between them). The author of this thesis implemented that approach utilizing GraphiniusJS and will demonstrate the algorithm in Section~\ref{sect:aoa_anonymization} as well as the anonymized results in Appendix Section~\ref{sect:anon_output_data}.
+\cite{campan2009data}, whose local subgraph problem we already encountered, proposed a solution in the form of a greedy clustering algorithm which takes into account not only the information loss incurred by generalizing features of nodes, but also introducing a structural loss function based on the local neighborhood within an equivalence class (and between them). The author of this thesis implemented that approach utilizing GraphiniusJS and will demonstrate the algorithm in Section~\ref{ssect:algorithm} as well as the anonymized results in Section~\ref{sect:results}.
 
 
 \section{Experiments}
 \label{sect:experiments}
 
+The following sections will describe our series of experiments in detail, encompassing the data source selected, the algorithm used as well as a description of the overall process employed to obtain results.
+
 
 \subsection{Data} 
 \label{ssect:data}
+
+As input data we chose the adults dataset 
 
 
 \begin{figure}[H]
