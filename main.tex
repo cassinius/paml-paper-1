@@ -194,8 +194,8 @@ As input data we chose the adults dataset from the UCI Machine Learning reposito
 \begin{figure}[!t]
 	\begin{center}
     \hspace*{-1cm}
-		\includegraphics[width=1.2\textwidth]{figures/experiment/initial_distribution}
-		\caption{Initial distribution of the data columns of the adult dataset}
+		\includegraphics[width=1.2\textwidth]{figures/experiment/dist_initial_small}
+		\caption{Initial distribution of the most important (w.r.t. classifier result quality) data columns of the adult dataset}
 		\label{fig:adult_original_distribution}
 	\end{center}
 \end{figure}
@@ -205,8 +205,8 @@ As one can see, there are several attributes with one value clearly dominating t
 \begin{figure}[!t]
 	\begin{center}
     	\hspace*{-1cm}
-		\includegraphics[width=1.2\textwidth]{figures/experiment/anon_distribution}
-		\caption{Distribution of the attribute values of the adult dataset with an anonymization factor of k=19, equal weight for each attribute.}
+		\includegraphics[width=1.2\textwidth]{figures/experiment/dist_anonym_small}
+		\caption{Anonymized distribution of the most important (w.r.t. classifier result quality) data columns of the adult dataset, anonymization factor of k=19, equal weight for each attribute.}
 		\label{fig:adult_anonymized_distribution}
 	\end{center}
 \end{figure}
@@ -295,9 +295,10 @@ To examine the impact of perturbation and anonymization of datasets on the quali
 
 \begin{figure}[!t]
 	\begin{center}
+		\vspace{-1.0cm}
     	\hspace*{-1.5cm}
-		\includegraphics[width=1.3\textwidth]{figures/experiment/important_columns}
-		\caption{The attribute values of the adult dataset which contribute most positively / negatively to the classification result. The columns to the right strongly indicate a yearly income of above 50k, whereas the columns to the outer left indicate a yearly income of below 50k.}
+		\includegraphics[width=1.25\textwidth]{figures/experiment/important_columns_cut}
+		\caption{The attribute values of the adult dataset which contribute most positively / negatively to the classification result. The columns to the right strongly indicate a yearly income of above 50k, whereas the columns to the outer left indicate a yearly income of below 50k. The least significant columns in the middle part were cut out.}
 		\label{fig:adult_important_columns}
 	\end{center}
 \end{figure}
