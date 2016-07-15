@@ -229,7 +229,7 @@ SaNGreeA stands for \textit{Social network greedy clustering} and was introduced
 where:\\
 - $\abs{cl}$ denotes the cluster cl's cardinality; \\
 - $size([i1,i2])$ is the size of the interval $[i1,i2]$, i.e., $(i2-i1)$; \\
-- $\Lambda(w), w \epsilon H_{C_j}$ is the subhierarchy of $H_{C_j}$ rooted in $w$; \\
+- $\Lambda(w), w \epsilon H_{C_j}$ is the sub-hierarchy of $H_{C_j}$ rooted in $w$; \\
 - $height(H_{C_j})$ denotes the height of the tree hierarchy $H_{C_j}$; \\
 
 
@@ -322,7 +322,6 @@ Considering the exact performance, Linear SVC and logistic regression yielded th
 		\includegraphics[width=0.49\textwidth]{figures/results/anon_gradient_boost}
 		\includegraphics[width=0.49\textwidth]{figures/results/anon_linear_svc}
 		\includegraphics[width=0.49\textwidth]{figures/results/anon_logistic_regression}
-%		\includegraphics[width=0.32\textwidth]{figures/results/anon_onevsrest_bagging}
 		\includegraphics[width=0.49\textwidth]{figures/results/anon_random_forest}
 		\caption{The impact of anonymization on the F1 score of different classifiers}
 		\label{fig:adult_results_anonymization}
@@ -338,7 +337,6 @@ As far as the second case is concerned (Figure~\ref{fig:adult_results_perturbati
 		\includegraphics[width=0.49\textwidth]{figures/results/perturb_gradient_boost}
 		\includegraphics[width=0.49\textwidth]{figures/results/perturb_linear_svc}
 		\includegraphics[width=0.49\textwidth]{figures/results/perturb_logistic_regression}
-%		\includegraphics[width=0.32\textwidth]{figures/results/perturb_vsrest_bagging}
 		\includegraphics[width=0.49\textwidth]{figures/results/perturb_random_forest}
 		\caption{The impact of perturbation (selectively deleting quantiles of rows containing one of the TOP 3 positively contributing attributes) on the F1 score of different classifiers}
 		\label{fig:adult_results_perturbation_top}
@@ -354,7 +352,6 @@ The only real surprise occurred with applying our classifiers to the datasets pe
 		\includegraphics[width=0.49\textwidth]{figures/results/perturb_gradient_boost_bottom}
 		\includegraphics[width=0.49\textwidth]{figures/results/perturb_linear_svc_bottom}
 		\includegraphics[width=0.49\textwidth]{figures/results/perturb_logistic_regression_bottom}
-%		\includegraphics[width=0.32\textwidth]{figures/results/perturb_onevsrest_bagging_bottom}
 		\includegraphics[width=0.49\textwidth]{figures/results/perturb_random_forest_bottom}
 		\caption{The impact of perturbation (selectively deleting quantiles of rows containing one of the TOP 3 negatively contributing attributes) on the F1 score of different classifiers}
 		\label{fig:adult_results_perturbation_bottom}
