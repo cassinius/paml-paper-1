@@ -106,7 +106,7 @@ Figure~\ref{fig:anon_categories} illustrates the original tabular concept of ano
 
 \begin{figure}[!t]
 	\begin{center}
-		\includegraphics[width=0.9\textwidth]{figures/anonym/3typesofdata}
+		\includegraphics[width=\textwidth]{figures/anonym/3typesofdata}
 		\caption{The three types of data considered in (k-)anonymization}
 		\label{fig:anon_categories}
 	\end{center}
@@ -118,7 +118,7 @@ The process of generalization works through a concept called \textit{generalizat
 
 \begin{figure}[!t]
 	\begin{center}
-		\includegraphics[width=0.8\textwidth]{figures/anonym/gen_hierarchy}
+		\includegraphics[width=\textwidth]{figures/anonym/gen_hierarchy}
 		\caption{Example of a typical generalization hierarchy}
 		\label{fig:gen_hierarchy}
 		\small
@@ -131,11 +131,11 @@ Each level of generalization involves a certain cost in information loss, so we 
 
 \begin{figure}[!t]
 	\centering
-	\begin{minipage}[b]{0.5\textwidth}
+	\begin{minipage}[b]{0.535\textwidth}
 		\includegraphics[width=\textwidth]{figures/anonym/k_anon_input}
 	\end{minipage}
 	\hfill
-	\begin{minipage}[b]{0.418\textwidth}
+	\begin{minipage}[b]{0.448\textwidth}
 		\includegraphics[width=\textwidth]{figures/anonym/k_anon_output}
 	\end{minipage}
 	\caption{Tabular anonymization: input table and anonymization result}
@@ -193,8 +193,8 @@ As input data we chose the adults dataset from the UCI Machine Learning reposito
 
 \begin{figure}[!t]
 	\begin{center}
-    \hspace*{-1cm}
-		\includegraphics[width=1.2\textwidth]{figures/experiment/dist_initial_small}
+    \hspace*{-0.8cm}
+		\includegraphics[width=1.1\textwidth]{figures/experiment/dist_initial_small}
 		\caption{Initial distribution of the most important (w.r.t. classifier result quality) data columns of the adult dataset}
 		\label{fig:adult_original_distribution}
 	\end{center}
@@ -204,8 +204,8 @@ As one can see, there are several attributes with one value clearly dominating t
 
 \begin{figure}[!t]
 	\begin{center}
-    	\hspace*{-1cm}
-		\includegraphics[width=1.2\textwidth]{figures/experiment/dist_anonym_small}
+    	\hspace*{-0.8cm}
+		\includegraphics[width=1.1\textwidth]{figures/experiment/dist_anonym_small}
 		\caption{Anonymized distribution of the most important (w.r.t. classifier result quality) data columns of the adult dataset, anonymization factor of k=19, equal weight for each attribute.}
 		\label{fig:adult_anonymized_distribution}
 	\end{center}
@@ -296,8 +296,8 @@ To examine the impact of perturbation and anonymization of datasets on the quali
 \begin{figure}[!t]
 	\begin{center}
 		\vspace{-1.0cm}
-    	\hspace*{-1.5cm}
-		\includegraphics[width=1.25\textwidth]{figures/experiment/important_columns_cut}
+    	\hspace*{-0.8cm}
+		\includegraphics[width=1.1\textwidth]{figures/experiment/important_columns_cut}
 		\caption{The attribute values of the adult dataset which contribute most positively / negatively to the classification result. The columns to the right strongly indicate a yearly income of above 50k, whereas the columns to the outer left indicate a yearly income of below 50k. The least significant columns in the middle part were cut out.}
 		\label{fig:adult_important_columns}
 	\end{center}
